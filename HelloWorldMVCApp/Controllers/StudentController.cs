@@ -1,16 +1,23 @@
 ﻿using HelloWorldMVCApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;  //remeber to bring in this for the grades list assignment
 
 namespace HelloWorldMVCApp.Controllers
 {
     public class StudentController : Controller
     {
+        private readonly HelloWorldContext _context;
 
+        public StudentController(HelloWorldContext context)
+        {
+            _context = context;
+        }
 
         public IActionResult Index()
         {
-            return View();
+            var model = _context.Students.ToList();
+            return View(model);
         }
 
 
@@ -24,6 +31,11 @@ namespace HelloWorldMVCApp.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+
+            //Create an instance of the DataContext Class
+            //in order to properly connect to our dtatabase
+            //HelloWorldContext context = new HelloWorldContext();
+
             Student model = new Student();
             var x = new List<Student>()
             {
@@ -53,6 +65,10 @@ namespace HelloWorldMVCApp.Controllers
             {
                 return View(model);
             }
+
+            //Save the Data
+            _context.Add(model); //Adding the data to the context
+            _context.SaveChanges();  //Saving the data to the table
             return View("Details", model);
         }
 

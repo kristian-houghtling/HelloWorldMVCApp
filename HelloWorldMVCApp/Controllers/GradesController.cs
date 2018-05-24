@@ -5,13 +5,24 @@ using System.Threading.Tasks;
 using HelloWorldMVCApp.Models;
 using Microsoft.AspNetCore.Mvc;
 
+
 namespace HelloWorldMVCApp.Controllers
 {
+
+
     public class GradesController : Controller
     {
+        private readonly HelloWorldContext _context;
+
+        public GradesController(HelloWorldContext context)
+        {
+            _context = context;
+        }
+
         public IActionResult Index()
         {
-            return View();
+            var model = _context.Grades.ToList();
+            return View(model);
         }
 
         [HttpGet]
@@ -28,6 +39,10 @@ namespace HelloWorldMVCApp.Controllers
             {
                 return View(model);
             }
+
+            _context.Add(model);
+            _context.SaveChanges();
+
             return View("Details", model);
         }
 

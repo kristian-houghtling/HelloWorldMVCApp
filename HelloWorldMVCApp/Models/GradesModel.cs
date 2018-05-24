@@ -24,5 +24,7 @@ namespace HelloWorldMVCApp.Models
 
         public string Notes { get; set; }
 
+
+
     }
 }
