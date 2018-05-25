@@ -37,6 +37,7 @@ namespace HelloWorldMVCApp.Controllers
             //HelloWorldContext context = new HelloWorldContext();
 
             Student model = new Student();
+
             var x = new List<Student>()
             {
                 new Student{status = "Yes",  hasPassed = false},
